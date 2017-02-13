@@ -13,6 +13,8 @@
 		FB515E891E519116001D019C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB515E881E519116001D019C /* Assets.xcassets */; };
 		FB515E8C1E519116001D019C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB515E8A1E519116001D019C /* LaunchScreen.storyboard */; };
 		FB515E951E519130001D019C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB515E941E519130001D019C /* ViewController.m */; };
+		FB515E981E51A155001D019C /* TVProgramm.m in Sources */ = {isa = PBXBuildFile; fileRef = FB515E971E51A155001D019C /* TVProgramm.m */; };
+		FB515E9C1E51A1FC001D019C /* Channel.m in Sources */ = {isa = PBXBuildFile; fileRef = FB515E9B1E51A1FC001D019C /* Channel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,10 @@
 		FB515E8D1E519116001D019C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FB515E931E519130001D019C /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = ../ViewController.h; sourceTree = "<group>"; };
 		FB515E941E519130001D019C /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = ../ViewController.m; sourceTree = "<group>"; };
+		FB515E961E51A155001D019C /* TVProgramm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVProgramm.h; sourceTree = "<group>"; };
+		FB515E971E51A155001D019C /* TVProgramm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVProgramm.m; sourceTree = "<group>"; };
+		FB515E9A1E51A1FC001D019C /* Channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Channel.h; sourceTree = "<group>"; };
+		FB515E9B1E51A1FC001D019C /* Channel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Channel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +64,7 @@
 		FB515E7B1E519116001D019C /* DZ31-32 UITableview Editing */ = {
 			isa = PBXGroup;
 			children = (
+				FB515E991E51A17D001D019C /* TVSettings */,
 				FB515E7F1E519116001D019C /* AppDelegate.h */,
 				FB515E801E519116001D019C /* AppDelegate.m */,
 				FB515E931E519130001D019C /* ViewController.h */,
@@ -77,6 +84,17 @@
 				FB515E7D1E519116001D019C /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FB515E991E51A17D001D019C /* TVSettings */ = {
+			isa = PBXGroup;
+			children = (
+				FB515E9A1E51A1FC001D019C /* Channel.h */,
+				FB515E9B1E51A1FC001D019C /* Channel.m */,
+				FB515E961E51A155001D019C /* TVProgramm.h */,
+				FB515E971E51A155001D019C /* TVProgramm.m */,
+			);
+			name = TVSettings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -152,6 +170,8 @@
 			files = (
 				FB515E951E519130001D019C /* ViewController.m in Sources */,
 				FB515E811E519116001D019C /* AppDelegate.m in Sources */,
+				FB515E981E51A155001D019C /* TVProgramm.m in Sources */,
+				FB515E9C1E51A1FC001D019C /* Channel.m in Sources */,
 				FB515E7E1E519116001D019C /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
