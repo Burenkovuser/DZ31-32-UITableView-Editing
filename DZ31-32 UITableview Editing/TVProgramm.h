@@ -13,6 +13,6 @@
 @property(strong, nonatomic) NSString* programmName;
 @property(assign, nonatomic) float timeIntrval;
 
-+(TVProgramm*) randomProgramm;
++(TVProgramm*) randomProgramm;//метод класса
 
 @end

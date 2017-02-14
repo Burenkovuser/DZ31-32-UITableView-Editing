@@ -11,6 +11,6 @@
 @interface Channel : NSObject
 
 @property (strong, nonatomic) NSString *channelName;
-@property (strong, nonatomic) NSArray* channelProgramms;
+@property (strong, nonatomic) NSArray* programms;
 
 @end

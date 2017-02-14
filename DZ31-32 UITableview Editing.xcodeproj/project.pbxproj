@@ -15,6 +15,8 @@
 		FB515E951E519130001D019C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB515E941E519130001D019C /* ViewController.m */; };
 		FB515E981E51A155001D019C /* TVProgramm.m in Sources */ = {isa = PBXBuildFile; fileRef = FB515E971E51A155001D019C /* TVProgramm.m */; };
 		FB515E9C1E51A1FC001D019C /* Channel.m in Sources */ = {isa = PBXBuildFile; fileRef = FB515E9B1E51A1FC001D019C /* Channel.m */; };
+		FB515E9F1E52E9E9001D019C /* Student.m in Sources */ = {isa = PBXBuildFile; fileRef = FB515E9E1E52E9E9001D019C /* Student.m */; };
+		FB515EA21E52EA13001D019C /* Group.m in Sources */ = {isa = PBXBuildFile; fileRef = FB515EA11E52EA13001D019C /* Group.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,10 @@
 		FB515E971E51A155001D019C /* TVProgramm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVProgramm.m; sourceTree = "<group>"; };
 		FB515E9A1E51A1FC001D019C /* Channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Channel.h; sourceTree = "<group>"; };
 		FB515E9B1E51A1FC001D019C /* Channel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Channel.m; sourceTree = "<group>"; };
+		FB515E9D1E52E9E9001D019C /* Student.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Student.h; sourceTree = "<group>"; };
+		FB515E9E1E52E9E9001D019C /* Student.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Student.m; sourceTree = "<group>"; };
+		FB515EA01E52EA13001D019C /* Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Group.h; path = ../Group.h; sourceTree = "<group>"; };
+		FB515EA11E52EA13001D019C /* Group.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Group.m; path = ../Group.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +99,10 @@
 				FB515E9B1E51A1FC001D019C /* Channel.m */,
 				FB515E961E51A155001D019C /* TVProgramm.h */,
 				FB515E971E51A155001D019C /* TVProgramm.m */,
+				FB515EA01E52EA13001D019C /* Group.h */,
+				FB515EA11E52EA13001D019C /* Group.m */,
+				FB515E9D1E52E9E9001D019C /* Student.h */,
+				FB515E9E1E52E9E9001D019C /* Student.m */,
 			);
 			name = TVSettings;
 			sourceTree = "<group>";
@@ -170,9 +180,11 @@
 			files = (
 				FB515E951E519130001D019C /* ViewController.m in Sources */,
 				FB515E811E519116001D019C /* AppDelegate.m in Sources */,
+				FB515EA21E52EA13001D019C /* Group.m in Sources */,
 				FB515E981E51A155001D019C /* TVProgramm.m in Sources */,
 				FB515E9C1E51A1FC001D019C /* Channel.m in Sources */,
 				FB515E7E1E519116001D019C /* main.m in Sources */,
+				FB515E9F1E52E9E9001D019C /* Student.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
