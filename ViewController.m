@@ -9,16 +9,14 @@
 #import "ViewController.h"
 #import "Channel.h"
 #import "TVProgramm.h"
-#import "Group.h"
-#import "Student.h"
+//#import "Group.h"
+//#import "Student.h"
 
 
 @interface ViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property(weak, nonatomic) UITableView *tableView;
 @property(strong, nonatomic) NSMutableArray *channelArray;
-
-
 
 //для студента
 @property(strong, nonatomic) NSMutableArray *groupsArrey;
@@ -46,11 +44,13 @@
     self.tableView = tableView; //добавляем наше проперти
     //self.tableView.backgroundColor = [UIColor redColor];
     
-    tableView.editing = YES;// включем режим редактирования
+    //tableView.editing = YES;// включем режим редактирования
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //СОЗДАЕМ ТАБЛИЦУ
     
     self.channelArray = [NSMutableArray array];
     
@@ -70,6 +70,14 @@
         [self.channelArray addObject:channal];//добавляем программу в массив каналов
     }
     [self.tableView reloadData]; //презагружаем дынные в tableView
+    
+    self.navigationItem.title = @"TV Programms";//заголовок в navigation
+    
+    //создаем кнопку
+    UIBarButtonItem* editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+                                                                                target:self
+                                                                                action:@selector(actionEdit:)];
+    self.navigationItem.rightBarButtonItem = editButton; //размещаем кнопку справа
 /*
     self.groupsArrey = [NSMutableArray array];
     
@@ -102,6 +110,25 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark - Actions
+//метод для editButton (меняем кнопку для редактирования)
+- (void) actionEdit:(UIBarButtonItem*) sendler {
+    BOOL isEditing = self.tableView.editing;//узнаем находимся ли в режиме редактирования
+    [self.tableView setEditing:!isEditing animated:YES];//
+    
+    UIBarButtonSystemItem item = UIBarButtonSystemItemEdit; // будет эта кнопка если не редактируется
+    
+    if (self.tableView.editing) {
+        item = UIBarButtonSystemItemDone;//будет кнопка если редактирвуется
+    }
+    UIBarButtonItem* editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:item
+                                                                                target:self
+                                                                                action:@selector(actionEdit:)];
+    //self.navigationItem.rightBarButtonItem = editButton; //размещаем кнопку справа без анимации
+    [self.navigationItem setRightBarButtonItem:editButton animated:YES]; // c анимацией
+
+}
 
 #pragma mark - UITableViewDataSource
 
@@ -153,7 +180,7 @@
 }
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
+    return YES;//разрешаем перемещать все строки
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath { // метод для реализации перемещения объектов между секциями!
@@ -175,9 +202,19 @@
         
         tempArray = [NSMutableArray arrayWithArray:destinationChannal.programms];
         [tempArray insertObject:programm atIndex:destinationIndexPath.row];
-        sourceChannel.programms = tempArray;
+        destinationChannal.programms = tempArray;
     }
     
+}
+
+#pragma mark - UITableViewDelegate
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleNone;//убираем красный шарик для редактирования
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO; //не двигается строка слева при редактировании
 }
 
 @end

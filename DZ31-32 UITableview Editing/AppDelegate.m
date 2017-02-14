@@ -18,8 +18,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    //создаем NavigationController
     ViewController *controller = [[ViewController alloc] init];
-    self.window.rootViewController = controller;
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
+    
+  
+    self.window.rootViewController = navController;
     
     return YES;
 }
