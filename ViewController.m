@@ -45,6 +45,8 @@
     [self.view addSubview:tableView];// добавляем на экран
     self.tableView = tableView; //добавляем наше проперти
     //self.tableView.backgroundColor = [UIColor redColor];
+    
+    tableView.editing = YES;// включем режим редактирования
 }
 
 - (void)viewDidLoad {
@@ -140,7 +142,7 @@
     //Group *group=self.groupsArray[indexPath.section];
     //Student *student=group.students[indexPath.row];
     //cell.textLabel.text = [NSString stringWithFormat:@"Section %ld", indexPath.section];
-    cell.textLabel.text = [NSString stringWithFormat:@"Section %@", programm.programmName];
+    cell.textLabel.text = [NSString stringWithFormat:@" %@", programm.programmName];
     //cell.textLabel.text = [NSString stringWithFormat:@"Studrnt %@ %@", student.lastName, student.firstName];
     
     
@@ -150,5 +152,32 @@
     return cell;
 }
 
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath { // метод для реализации перемещения объектов между секциями!
+    //источик канал откуда берем данные(программы) для перемещения
+    Channel* sourceChannel = [self.channelArray objectAtIndex:sourceIndexPath.section];//секция соответствует каналу
+    TVProgramm* programm = [sourceChannel.programms objectAtIndex:sourceIndexPath.row];//строка соответствует программе
+    NSMutableArray *tempArray = [NSMutableArray arrayWithArray:sourceChannel.programms];
+    
+    if (sourceIndexPath.section == destinationIndexPath.section) { //если находятся в одной секции
+        [tempArray exchangeObjectAtIndex:sourceIndexPath.row withObjectAtIndex:destinationIndexPath.row];// меняем строки местами
+        sourceChannel.programms = tempArray;
+    } else {
+        
+        [tempArray removeObject:programm];//удаляем программу
+        sourceChannel.programms = tempArray;
+        
+        //Берем канал куда будет перемещатся программа
+        Channel *destinationChannal = [self.channelArray objectAtIndex:destinationIndexPath.section];
+        
+        tempArray = [NSMutableArray arrayWithArray:destinationChannal.programms];
+        [tempArray insertObject:programm atIndex:destinationIndexPath.row];
+        sourceChannel.programms = tempArray;
+    }
+    
+}
 
 @end
