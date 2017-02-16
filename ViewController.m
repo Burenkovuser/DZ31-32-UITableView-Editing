@@ -42,6 +42,8 @@
     
     [self.view addSubview:tableView];// добавляем на экран
     self.tableView = tableView; //добавляем наше проперти
+    self.tableView.allowsSelectionDuringEditing = NO;
+    
     //self.tableView.backgroundColor = [UIColor redColor];
     
     //tableView.editing = YES;// включем режим редактирования
@@ -299,6 +301,45 @@
         
         return proposedDestinationIndexPath;
     }
-
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{ // Метод вызывается при клике по ряду. Здесь реализуем добавление программы на канал при клике на add Programm.
+    [tableView deselectRowAtIndexPath:indexPath animated:YES]; //если нажал то стразу отменяем
+    
+    if (indexPath.row == 0) {
+        Channel* chanal = [self.channelArray objectAtIndex:indexPath.section];
+        
+        NSMutableArray* tempArray = nil;
+        
+        if (chanal.programms) {
+            tempArray = [NSMutableArray arrayWithArray:chanal.programms];
+        } else {
+            tempArray = [NSMutableArray array];
+        }
+        
+        NSInteger newProgrammIndex = 0;
+        
+        [tempArray insertObject:[TVProgramm randomProgramm] atIndex:newProgrammIndex]; // добавлем в начало новую программу
+        chanal.programms = tempArray;
+
+        [self.tableView beginUpdates]; //начинаем внутри анимации
+        
+        NSIndexPath* newIndexPath = [NSIndexPath indexPathForItem:newProgrammIndex + 1 inSection:indexPath.section];
+        
+        [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationLeft]; //анимация слева
+        
+        [self.tableView endUpdates];
+        
+        //запрещаем игнорируем любые нажатия в приложении
+        [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if ([[UIApplication sharedApplication] isIgnoringInteractionEvents]) {//если игнорируется
+                [[UIApplication sharedApplication] endIgnoringInteractionEvents];//заканчиваем игнорировать нажатия через 0.3 секунды
+            }
+        });
+    }
+}
+
+
 @end
