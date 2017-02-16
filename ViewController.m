@@ -56,6 +56,7 @@
     
     self.channelArray = [NSMutableArray array];
     
+    /*
     //создает ТВ каналы рендомно
     for (int i = 0; i < (arc4random() % 6 + 5); i++) {
         
@@ -72,6 +73,7 @@
         [self.channelArray addObject:channal];//добавляем программу в массив каналов
     }
     [self.tableView reloadData]; //презагружаем дынные в tableView
+    */
     
     self.navigationItem.title = @"TV Programms";//заголовок в navigation
     
@@ -87,22 +89,6 @@
                                                                                 action:@selector(actionAddSection:)];
     self.navigationItem.leftBarButtonItem = addButton; //размещаем кнопку слева
     
-/*
-    self.groupsArrey = [NSMutableArray array];
-    
-    for (int i = 0; i < (arc4random() % 6 + 5); i++) {
-        Group *group = [[Group alloc] init];
-        group.name = [NSString stringWithFormat:@"Group %@",@(i)];
-  
-        NSMutableArray* array = [NSMutableArray array];
-
-        for (int j = 0; j < (arc4random() % 11 + 15); j++) {
-            [array addObject:[Student randomStudent]];
-        }
-        group.studrnts = array;
-        [self.groupsArrey addObject:group];
-}
-    [self.tableView reloadData]; */
 }
 
 - (void)didReceiveMemoryWarning {
@@ -155,6 +141,7 @@
     
     NSIndexSet* insertSection = [NSIndexSet indexSetWithIndex:newSectionIndex]; //создаем набор куда доваляем новую секцию
     
+    
     [self.tableView insertSections:insertSection withRowAnimation:UITableViewRowAnimationLeft]; //анимация слева
     
     [self.tableView endUpdates];
@@ -202,7 +189,7 @@
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:addProgramIidentifier]; //если менять цвета, шрифт и т.д. лучше делать это здесь
             cell.textLabel.textColor = [UIColor blueColor];
-            cell.textLabel.text = @"Add programm";
+            cell.textLabel.text = @"Tap to add new programm";
     }
         return  cell;
         
@@ -278,13 +265,34 @@
         [tempArray insertObject:programm atIndex:destinationIndexPath.row - 1];
         destinationChannal.programms = tempArray;
     }
-    
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath { // Метод, в котором реализуется удаление ряда, при нажатии на кнопку Delete
+
+    if (editingStyle  == UITableViewCellEditingStyleDelete) {
+        Channel* sourceChannel = [self.channelArray objectAtIndex:indexPath.section];//секция соответствует каналу
+        TVProgramm* programm = [sourceChannel.programms objectAtIndex:indexPath.row - 1];//строка соответствует программе
+        NSMutableArray* tempArray = [NSMutableArray arrayWithArray:sourceChannel.programms];
+        [tempArray removeObject:programm];
+        sourceChannel.programms = tempArray;
+        
+        [tableView beginUpdates];
+        
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+        
+        [tableView endUpdates];
+    }
 }
 
 #pragma mark - UITableViewDelegate
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return UITableViewCellEditingStyleNone;//убираем красный шарик для редактирования
+    return indexPath.row == 0 ? UITableViewCellEditingStyleNone : UITableViewCellEditingStyleDelete;//убираем красный шарик для редактирования по индексу 0, а другой можно удалить
+}
+
+- (nullable NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {//меняем название кнопки Delit
+    return @"Remove";
+    
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
