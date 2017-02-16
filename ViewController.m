@@ -78,6 +78,13 @@
                                                                                 target:self
                                                                                 action:@selector(actionEdit:)];
     self.navigationItem.rightBarButtonItem = editButton; //размещаем кнопку справа
+    
+    //создаем кнопку
+    UIBarButtonItem* addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                                                target:self
+                                                                                action:@selector(actionAddSection:)];
+    self.navigationItem.leftBarButtonItem = addButton; //размещаем кнопку слева
+    
 /*
     self.groupsArrey = [NSMutableArray array];
     
@@ -128,6 +135,17 @@
     //self.navigationItem.rightBarButtonItem = editButton; //размещаем кнопку справа без анимации
     [self.navigationItem setRightBarButtonItem:editButton animated:YES]; // c анимацией
 
+}
+
+-(void) actionAddSection:(UIBarButtonItem*) sender { // Метод добавляет ТВ канал при нажатии на кнопку (+)
+    
+    Channel *channal = [[Channel alloc] init];
+    channal.channelName = [NSString stringWithFormat:@"Channal %lu", [self.channelArray count] +1];
+    channal.programms = @[[TVProgramm randomProgramm], [TVProgramm randomProgramm]];
+    
+    [self.channelArray insertObject:channal atIndex:0];//вставляем новый канал в начало
+    
+    [self.tableView reloadData];// презагружаем таблицу
 }
 
 #pragma mark - UITableViewDataSource
