@@ -141,11 +141,30 @@
     
     Channel *channal = [[Channel alloc] init];
     channal.channelName = [NSString stringWithFormat:@"Channal %lu", [self.channelArray count] +1];
-    channal.programms = @[[TVProgramm randomProgramm], [TVProgramm randomProgramm]];
+    channal.programms = @[[TVProgramm randomProgramm], [TVProgramm randomProgramm]];//добавляем по два рендномных канала за раз
     
-    [self.channelArray insertObject:channal atIndex:0];//вставляем новый канал в начало
+    NSInteger newSectionIndex = 0;
     
-    [self.tableView reloadData];// презагружаем таблицу
+    [self.channelArray insertObject:channal atIndex:newSectionIndex];//вставляем новый канал в начало
+    
+    //[self.tableView reloadData];// презагружаем таблицу
+    
+    [self.tableView beginUpdates]; //начинаем внутри анимации
+    
+    NSIndexSet* insertSection = [NSIndexSet indexSetWithIndex:newSectionIndex]; //создаем набор куда доваляем новую секцию
+    
+    [self.tableView insertSections:insertSection withRowAnimation:UITableViewRowAnimationLeft]; //анимация слева
+    
+    [self.tableView endUpdates];
+    
+    //запрещаем игнорируем любые нажатия в приложении
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if ([[UIApplication sharedApplication] isIgnoringInteractionEvents]) {//если игнорируется
+            [[UIApplication sharedApplication] endIgnoringInteractionEvents];//заканчиваем игнорировать нажатия через 0.3 секунды
+        }
+    });
 }
 
 #pragma mark - UITableViewDataSource
