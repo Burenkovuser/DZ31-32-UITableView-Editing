@@ -185,13 +185,48 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section { // количество рядов в секции соответсует количеству программ в канале
     Channel* chanal = [self.channelArray objectAtIndex:section];
-    return [chanal.programms count];
+    return [chanal.programms count] +1; //плюс 1 ломает программу+
     //return 5;
     //Group * group = [self.groupsArrey objectAtIndex:section];
     //return [group.studrnts count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.row == 0) {
+        static NSString* addProgramIidentifier = @"AddProgrammCell";
+        
+        UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:addProgramIidentifier];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:addProgramIidentifier]; //если менять цвета, шрифт и т.д. лучше делать это здесь
+            cell.textLabel.textColor = [UIColor blueColor];
+            cell.textLabel.text = @"Add programm";
+    }
+        return  cell;
+        
+    } else {
+        
+        static NSString* programIidentifier = @"ProgrammCell";
+        UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:programIidentifier];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:programIidentifier]; //если менять цвета, шрифт и т.д. лучше делать это здесь
+        }
+        
+        Channel* chanal = [self.channelArray objectAtIndex:indexPath.section];//канал соответсвует секции
+        TVProgramm* programm = [chanal.programms objectAtIndex:indexPath.row - 1];//программа это ряд
+        
+        cell.textLabel.text = [NSString stringWithFormat:@" %@", programm.programmName];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%1.2f",programm.timeIntrval];
+        
+        return cell;
+    }
+    
+}
+
+
+/*
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     static NSString* identifier = @"Cell";
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
@@ -215,7 +250,7 @@
     //cell.detailTextLabel.text = [NSString stringWithFormat:@"%1.2f",student.averageGrade];
     return cell;
 }
-
+*/
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;//разрешаем перемещать все строки
 }
