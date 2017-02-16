@@ -252,17 +252,17 @@
 }
 */
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;//разрешаем перемещать все строки
+    return indexPath.row > 0;//разрешаем перемещать
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath { // метод для реализации перемещения объектов между секциями!
     //источик канал откуда берем данные(программы) для перемещения
     Channel* sourceChannel = [self.channelArray objectAtIndex:sourceIndexPath.section];//секция соответствует каналу
-    TVProgramm* programm = [sourceChannel.programms objectAtIndex:sourceIndexPath.row];//строка соответствует программе
+    TVProgramm* programm = [sourceChannel.programms objectAtIndex:sourceIndexPath.row - 1];//строка соответствует программе
     NSMutableArray *tempArray = [NSMutableArray arrayWithArray:sourceChannel.programms];
     
     if (sourceIndexPath.section == destinationIndexPath.section) { //если находятся в одной секции
-        [tempArray exchangeObjectAtIndex:sourceIndexPath.row withObjectAtIndex:destinationIndexPath.row];// меняем строки местами
+        [tempArray exchangeObjectAtIndex:sourceIndexPath.row - 1 withObjectAtIndex:destinationIndexPath.row - 1];// меняем строки местами
         sourceChannel.programms = tempArray;
     } else {
         
@@ -273,7 +273,7 @@
         Channel *destinationChannal = [self.channelArray objectAtIndex:destinationIndexPath.section];
         
         tempArray = [NSMutableArray arrayWithArray:destinationChannal.programms];
-        [tempArray insertObject:programm atIndex:destinationIndexPath.row];
+        [tempArray insertObject:programm atIndex:destinationIndexPath.row - 1];
         destinationChannal.programms = tempArray;
     }
     
@@ -289,4 +289,16 @@
     return NO; //не двигается строка слева при редактировании
 }
 
+- (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath { // метод который информирует, куда положится строка после перемещения.
+    
+    if (proposedDestinationIndexPath.row == 0) { // Не даем ряду встать под индексом 0, так как этот индекс закреплен за кнопкой добавления программы на канал.
+        
+        return sourceIndexPath;
+        
+    } else {
+        
+        return proposedDestinationIndexPath;
+    }
+
+}
 @end
